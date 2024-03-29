@@ -16048,7 +16048,7 @@ class profiler_Profiler {
     version
   }) {
     if (version.startsWith('8.0.') && versionPrefix === 'MySQL') {
-      this.logger.warning('It is recommended to run MySQL 5 or MariaDB with mysql-async. You may experience performance issues under load by using MySQL 8.');
+      this.logger.warning('It is recommended to run MySQL 5 or MariaDB with ABCore-sql. You may experience performance issues under load by using MySQL 8.');
     }
 
     this.version = `${versionPrefix}:${version}`;
@@ -16205,19 +16205,19 @@ const server_config = { ...defaultCfg,
   ...utility_getConfig()
 };
 const server_server = new server(server_config, {
-  tag: 'mysql-async'
+  tag: 'ABCore-sql'
 });
 let isReady = false;
 global.exports('is_ready', () => isReady);
 on('onResourceStart', resourcename => {
   // avoid old bugs
-  if (resourcename === 'mysql-async') {
+  if (resourcename === 'ABCore-sql') {
     emit('onMySQLReady');
     isReady = true;
 
     if (server_config.keepAlive) {
       setInterval(() => {
-        server_server.execute('SELECT 1', [], null, 'mysql-async:keepAlive');
+        server_server.execute('SELECT 1', [], null, 'ABCore-sql:keepAlive');
       }, server_config.keepAlive * 1000);
     }
   }
@@ -16275,22 +16275,22 @@ RegisterCommand('mysql:debug', () => {
 
   server_server.logger.info(`display debug: ${trace}`);
 }, true);
-onNet('mysql-async:request-data', () => {
+onNet('ABCore-sql:request-data', () => {
   const src = source;
-  emitNet('mysql-async:update-resource-data', src, server_server.profiler.profiles.resources);
-  emitNet('mysql-async:update-time-data', src, server_server.profiler.profiles.executionTimes);
-  emitNet('mysql-async:update-slow-queries', src, server_server.profiler.profiles.slowQueries);
+  emitNet('ABCore-sql:update-resource-data', src, server_server.profiler.profiles.resources);
+  emitNet('ABCore-sql:update-time-data', src, server_server.profiler.profiles.executionTimes);
+  emitNet('ABCore-sql:update-slow-queries', src, server_server.profiler.profiles.slowQueries);
 });
-onNet('mysql-async:request-server-status', () => {
+onNet('ABCore-sql:request-server-status', () => {
   const src = source;
   server_server.execute('SHOW GLOBAL STATUS', data => {
-    emitNet('mysql-async:update-status', src, data);
-  }, null, 'mysql-async').then(([result, cb]) => {
+    emitNet('ABCore-sql:update-status', src, data);
+  }, null, 'ABCore-sql').then(([result, cb]) => {
     cb(result);
   }).catch(() => false);
   server_server.execute('SHOW GLOBAL VARIABLES', data => {
-    emitNet('mysql-async:update-variables', src, data);
-  }, null, 'mysql-async').then(([result, cb]) => {
+    emitNet('ABCore-sql:update-variables', src, data);
+  }, null, 'ABCore-sql').then(([result, cb]) => {
     cb(result);
   }).catch(() => false);
 });

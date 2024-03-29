@@ -1,29 +1,23 @@
 fx_version 'adamant'
 game 'common'
 
-name 'mysql-async'
-description 'MySQL Middleware for lua.'
-author 'Joel Wurtz & Matthias Mandelartz'
-version '3.3.2'
-url 'https://github.com/brouznouf/fivem-mysql-async'
+name 'ABCore-sql'
+description 'Script sql pour vos server FiveM.'
+author 'Lucas Wurtz // Many // Abject'
+version '1.0.0'
+url 'https://github.com/brouznouf/fivem-ABCore-sql'
 
-server_script 'mysql-async.js'
-client_script 'mysql-async-client.lua'
+server_script 'ABCore-sql.js'
+client_script 'ABCore-sql-client.lua'
 
 files {
-  'ui/index.html',
-  'ui/js/app.js',
-  'ui/css/app.css',
-  'ui/fonts/fira-sans-v9-latin-700.woff',
-  'ui/fonts/fira-sans-v9-latin-700.woff2',
-  'ui/fonts/fira-sans-v9-latin-italic.woff',
-  'ui/fonts/fira-sans-v9-latin-italic.woff2',
-  'ui/fonts/fira-sans-v9-latin-regular.woff',
-  'ui/fonts/fira-sans-v9-latin-regular.woff2',
-  'ui/fonts/MaterialIcons-Regular.eot',
-  'ui/fonts/MaterialIcons-Regular.ttf',
-  'ui/fonts/MaterialIcons-Regular.woff',
-  'ui/fonts/MaterialIcons-Regular.woff2',
+  'interface/ABCore-sql.html',
+  'interface/js/*.js',
+  'interface/css/*.css',
+  'interface/fonts/*.woff',
+  'interface/fonts/*.woff2',
+  'interface/fonts/*.eot',
+  'interface/fonts/*.ttf',
 }
 
-ui_page 'ui/index.html'
+ui_page 'interface/ABCore-sql.html'

@@ -4,7 +4,7 @@ function setNuiActive(booleanOrNil)
   local boolean = true
   if booleanOrNil ~= nil then boolean = booleanOrNil end
   if boolean ~= isNuiActive then
-    if boolean then TriggerServerEvent('mysql-async:request-data') end
+    if boolean then TriggerServerEvent('ABCore-sql:request-data') end
     isNuiActive = boolean
     SendNUIMessage({ type = 'onToggleShow' })
     SetNuiFocus(boolean, boolean)
@@ -20,7 +20,7 @@ RegisterNUICallback('close-explorer', function()
 end)
 
 CreateThread(function()
-  if isNuiActive then TriggerServerEvent('mysql-async:request-data') end
+  if isNuiActive then TriggerServerEvent('ABCore-sql:request-data') end
   Wait(300000)
 end)
 
@@ -51,8 +51,8 @@ function filter(t, callback)
   return newTable
 end
 
-RegisterNetEvent('mysql-async:update-resource-data')
-AddEventHandler('mysql-async:update-resource-data', function (resourceData)
+RegisterNetEvent('ABCore-sql:update-resource-data')
+AddEventHandler('ABCore-sql:update-resource-data', function (resourceData)
   local arrayToSortAndMap = {}
   for resource, data in pairs(resourceData) do
     table.insert(arrayToSortAndMap, {
@@ -81,8 +81,8 @@ AddEventHandler('mysql-async:update-resource-data', function (resourceData)
   end
 end)
 
-RegisterNetEvent('mysql-async:update-time-data')
-AddEventHandler('mysql-async:update-time-data', function (timeData)
+RegisterNetEvent('ABCore-sql:update-time-data')
+AddEventHandler('ABCore-sql:update-time-data', function (timeData)
   local timeArray = {}
   if isArray(timeData) then
     local len = #timeData
@@ -100,8 +100,8 @@ AddEventHandler('mysql-async:update-time-data', function (timeData)
   end
 end)
 
-RegisterNetEvent('mysql-async:update-slow-queries')
-AddEventHandler('mysql-async:update-slow-queries', function(slowQueryData)
+RegisterNetEvent('ABCore-sql:update-slow-queries')
+AddEventHandler('ABCore-sql:update-slow-queries', function(slowQueryData)
   local slowQueries = slowQueryData
   for i = 1, #slowQueries do
     slowQueries[i].queryTime = math.floor(slowQueries[i].queryTime * 100 + 0.5) / 100
@@ -112,16 +112,16 @@ AddEventHandler('mysql-async:update-slow-queries', function(slowQueryData)
   });
 end)
 
-RegisterNetEvent('mysql-async:update-status')
-AddEventHandler('mysql-async:update-status', function(statusData)
+RegisterNetEvent('ABCore-sql:update-status')
+AddEventHandler('ABCore-sql:update-status', function(statusData)
   SendNUIMessage({
     type = 'onStatusData',
     status = statusData,
   });
 end)
 
-RegisterNetEvent('mysql-async:update-variables')
-AddEventHandler('mysql-async:update-variables', function(variableData)
+RegisterNetEvent('ABCore-sql:update-variables')
+AddEventHandler('ABCore-sql:update-variables', function(variableData)
   SendNUIMessage({
     type = 'onVariableData',
     variables = variableData,
@@ -129,11 +129,11 @@ AddEventHandler('mysql-async:update-variables', function(variableData)
 end)
 
 RegisterNUICallback('request-server-status', function()
-  TriggerServerEvent('mysql-async:request-server-status')
+  TriggerServerEvent('ABCore-sql:request-server-status')
 end)
 
-RegisterNetEvent('mysql-async:get-table-schema')
-AddEventHandler('mysql-async:get-table-schema', function(tableName, schema)
+RegisterNetEvent('ABCore-sql:get-table-schema')
+AddEventHandler('ABCore-sql:get-table-schema', function(tableName, schema)
   SendNUIMessage({
     type = 'onTableSchema',
     tableName = tableName,
@@ -142,5 +142,5 @@ AddEventHandler('mysql-async:get-table-schema', function(tableName, schema)
 end)
 
 RegisterNUICallback('request-table-schema', function(tableName)
-  TriggerServerEvent('mysql-async:request-table-schema', tableName)
+  TriggerServerEvent('ABCore-sql:request-table-schema', tableName)
 end)
