@@ -8,7 +8,7 @@ version '1.0.0'
 url 'https://github.com/brouznouf/fivem-ABCore-sql'
 
 server_script 'ABCore-sql.js'
-client_script 'ABCore-sql-client.lua'
+client_script 'ABCore-sql.lua'
 
 files {
   'interface/ABCore-sql.html',
